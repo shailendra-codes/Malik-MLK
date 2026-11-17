@@ -1,0 +1,105 @@
+            <option value="INR" selected>INR - Indian Rupee</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="AED">AED - UAE Dirham</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="BTC">BTC - Bitcoin</option>
+            <option value="ETH">ETH - Ethereum</option>
+            <option value="SOL">SOL - Solana</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label>To (Target Currency / Coin)</label>
+        <select id="toAsset" onchange="convert()">
+            <option value="MLK" selected>MLK - Malik Coin ($1.00)</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="AED">AED - UAE Dirham</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="BTC">BTC - Bitcoin</option>
+            <option value="ETH">ETH - Ethereum</option>
+            <option value="SOL">SOL - Solana</option>
+        </select>
+    </div>
+
+    <div class="result-box">
+        <span style="font-size: 12px; color: #94a3b8;">Converted Value</span>
+        <h2 id="resultText">Loading live rates...</h2>
+        <span id="mlkBridgeText" style="font-size: 12px; color: #38bdf8;"></span>
+    </div>
+
+    <div class="security-note">
+        🛡️ Protected by Malik AML Security & Daily Limit Protocol
+    </div>
+</div>
+
+<script>
+    // डिफ़ॉल्ट बैकअप रेट्स (USD के मुकाबले)
+    let usdRates = {
+        MLK: 1,
+        USD: 1,
+        INR: 0.0118,
+        EUR: 1.08,
+        GBP: 1.27,
+        AED: 0.272,
+        JPY: 0.0065,
+        BTC: 90000,
+        ETH: 3100,
+        SOL: 210
+    };
+
+    // इंटरनेट से लाइव करेंसी और क्रिप्टो रेट्स लाना
+    async function fetchLiveRates() {
+        try {
+            // 1. सरकारी करेंसी के लाइव रेट्स
+            const fiatRes = await fetch('https://er-api.com');
+            const fiatData = await fiatRes.json();
+            if (fiatData && fiatData.rates) {
+                usdRates.INR = 1 / fiatData.rates.INR;
+                usdRates.EUR = 1 / fiatData.rates.EUR;
+                usdRates.GBP = 1 / fiatData.rates.GBP;
+                usdRates.AED = 1 / fiatData.rates.AED;
+                usdRates.JPY = 1 / fiatData.rates.JPY;
+            }
+
+            // 2. क्रिप्टो कॉइन्स के लाइव रेट्स
+            const cryptoRes = await fetch('https://coingecko.com');
+            const cryptoData = await cryptoRes.json();
+            if (cryptoData) {
+                usdRates.BTC = cryptoData.bitcoin.usd;
+                usdRates.ETH = cryptoData.ethereum.usd;
+                usdRates.SOL = cryptoData.solana.usd;
+            }
+        } catch (error) {
+            console.log("Using offline fallback rates");
+        }
+        convert();
+    }
+
+    function convert() {
+        const amount = parseFloat(document.getElementById('amount').value) || 0;
+        const from = document.getElementById('fromAsset').value;
+        const to = document.getElementById('toAsset').value;
+
+        // पहले किसी भी करेंसी को Malik (MLK = $1) में बदलना
+        const valueInMLK = amount * usdRates[from];
+       
+        // फिर MLK से टारगेट करेंसी या कॉइन में बदलना
+        const finalAmount = valueInMLK / usdRates[to];
+
+        // क्रिप्टो के लिए ज़्यादा दशमलव दिखाना
+        const decimals = ['BTC', 'ETH', 'SOL'].includes(to) ? 6 : 2;
+       
+        document.getElementById('resultText').innerText = `${finalAmount.toFixed(decimals)} ${to}`;
+        document.getElementById('mlkBridgeText').innerText = `Bridge Value: ${valueInMLK.toFixed(2)} MLK ($${valueInMLK.toFixed(2)})`;
+    }
+
+    fetchLiveRates();
+</script>
+
+</body>
+</html>
+ 
