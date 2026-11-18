@@ -1,0 +1,16 @@
+# Security & Private Keys (Never commit secrets)
+.env
+.env.local
+secrets.json
+
+# Node.js & Hardhat Dependencies
+node_modules/
+cache/
+artifacts/
+coverage/
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+*.log
+ 
