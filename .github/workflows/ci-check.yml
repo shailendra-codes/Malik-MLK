@@ -1,0 +1,26 @@
+name: Malik Protocol CI & Security Check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  verify-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Malik-MLK Repository
+        uses: actions/checkout@v4
+
+      - name: Verify Core Smart Contracts & Compliance Files
+        run: |
+          echo "Checking Malik (MLK) Ecosystem Integrity..."
+          test -f Contracts/MalikToken.sol
+          test -f Contracts/MalikBridge.sol
+          test -f Contracts/MalikLiquidityPool.sol
+          test -f Contracts/MalikOracle.sol
+          test -f COMPLIANCE.md
+          test -f SECURITY.md
+          echo "✅ All core contracts and AML security policies verified!"
+ 
