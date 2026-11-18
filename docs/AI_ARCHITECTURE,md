@@ -1,0 +1,12 @@
+# 🧠 Malik Sentinel AI — Autonomous Security & Liquidity Intelligence
+
+**Malik (MLK)** integrates an on-device and server-side **Artificial Intelligence Layer (`MalikAIShield`)** to protect user funds against modern crypto theft, wallet drainers, and illicit money laundering.
+
+## Core AI Capabilities
+1. **Real-Time Behavioral Anomaly Detection:**
+   Continuously analyzes transaction velocity, frequency, and volume to detect automated hacker scripts before funds leave the wallet.
+2. **Dynamic Risk Scoring (0–100):**
+   Every conversion is assigned an instant AI Risk Score. Any transaction scoring **50 or above** is automatically frozen before smart contract execution.
+3. **Predictive Liquidity Routing:**
+   Calculates optimal conversion paths via the `1 MLK = $1.00 USD` bridge standard, saving users up to **3.5%** compared to traditional cross-border banking fees.
+ 
