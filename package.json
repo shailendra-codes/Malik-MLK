@@ -1,0 +1,20 @@
+{
+  "name": "malik-mlk-protocol",
+  "version": "1.0.0",
+  "description": "Universal Global Currency & Crypto Bridge Coin (1 MLK = $1 USD) with Built-in AML Security",
+  "author": "Shailendra Kumar Singh",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.js"
+  }
+}
+ 
